@@ -1,0 +1,9 @@
+Reference,Value,Footprint,Quantity,Description,Supplier,Notes
+U1,74HC04,Package_DIP:DIP-14_W7.62mm,1,Hex inverter,"Mouser: 595-SN74HC04N, Digikey: 296-1566-5-ND",5 of 6 gates used
+U2,74HC86,Package_DIP:DIP-14_W7.62mm,1,Quad 2-input XOR gate,"Mouser: 595-SN74HC86N, Digikey: 296-1606-5-ND",1 of 4 gates used
+C1,100nF,Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm,1,Ceramic decoupling cap for U1,,Place close to U1 VCC/GND
+C2,100nF,Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm,1,Ceramic decoupling cap for U2,,Place close to U2 VCC/GND
+R1,10k,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm,1,"Pull-up for DIN pin 4 (Black) to VCC",,1/4W
+J1,DB9_Male,Connector_Dsub:DSUB-9_Male_Horizontal_P2.77x2.84mm,1,DE-9 male right-angle PCB mount,,Plugs into PC1640 video output
+J2,DIN-8,Connector_DIN:DIN-8_Mini,1,8-pin DIN female PCB mount,,PC-MM video cable plugs into this
+J3,Conn_01x02,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm,1,Power input header +5V/GND,,Or USB Micro-B breakout board

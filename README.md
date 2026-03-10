@@ -73,12 +73,24 @@ Keep the PC1640 in EGA mode for full 64-color palette capability. This option ha
 | **Cost** | ~16–22€ | ~50–350€ + adapter |
 | **Complexity** | Low | High |
 
+## Chosen Design: Option A
+
+Option A (external adapter, no monitor modification) is the selected approach.
+
+### Hardware Files
+
+- [`hardware/netlist.md`](hardware/netlist.md) — Complete point-to-point wiring with ASCII schematic
+- [`hardware/bom.csv`](hardware/bom.csv) — Bill of materials with supplier part numbers
+- [`hardware/amstrad-pc1640-pcmm-adapter.kicad_pro`](hardware/amstrad-pc1640-pcmm-adapter.kicad_pro) — KiCad project
+
 ## Project Status
 
 - [x] Signal analysis and pinout research
 - [x] Adapter design (schematic level)
-- [ ] KiCad schematic
-- [ ] PCB layout
+- [x] Netlist and BOM
+- [x] KiCad project skeleton
+- [ ] KiCad schematic (.kicad_sch)
+- [ ] PCB layout (.kicad_pcb)
 - [ ] Prototype build and testing
 - [ ] Gerber files for manufacturing
 
