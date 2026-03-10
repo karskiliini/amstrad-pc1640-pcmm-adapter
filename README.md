@@ -2,7 +2,7 @@
 
 Video adapter for connecting an Amstrad PC1640 to an Amstrad PC-MM monochrome monitor.
 
-The PC1640 and PC-MM were never designed to work together — the PC-MM was built for the PC1512. This project documents the signal incompatibilities and presents three adapter designs to bridge them.
+The PC1640 and PC-MM were never designed to work together — the PC-MM was built for the PC1512. This project documents the signal incompatibilities and presents four adapter designs to bridge them.
 
 ## The Problem
 
@@ -14,13 +14,15 @@ The PC1640 and PC-MM were never designed to work together — the PC-MM was buil
 | Frequency | 21.85 kHz (EGA) / 15.7 kHz (CGA) | 15.75 kHz only |
 | Power (14-pin DIN) | Same pinout | Same pinout — **compatible** |
 
-**Solution:** Run PC1640 in CGA mode (DIP switch SW8 = OFF) and use an adapter for signal conversion.
+**Solutions:** Run PC1640 in CGA mode (SW8 = OFF) for simplest adapter, or keep EGA mode (SW8 = ON) with additional signal conversion. See options below.
 
 ## Documentation
 
 - **[Signal Analysis](docs/signal-analysis.md)** — Full pinouts, signal levels, frequency specs, and compatibility breakdown for both devices
 
 ## Adapter Options
+
+### CGA mode (SW8 = OFF) — simpler adapter
 
 | | Option A | Option B | Option C |
 |---|---|---|---|
@@ -33,7 +35,7 @@ The PC1640 and PC-MM were never designed to work together — the PC-MM was buil
 | **Reversible** | Fully | Partially | Fully |
 | **Recommended** | **Yes** | For advanced users | Testing only |
 
-### [Option A: External Adapter](docs/option-a-external-adapter.md) (recommended)
+### [Option A: External Adapter](docs/option-a-external-adapter.md) (recommended for CGA mode)
 
 Two ICs on a small PCB handle everything:
 - **74HC04** inverts R, G, B, I, and C-Sync to match PC-MM's active-low input
@@ -48,6 +50,28 @@ Bypass the PC-MM's internal TC74HC04 inverter, allowing standard TTL signals to 
 ### [Option C: Passive Test Cable](docs/option-c-passive-test.md)
 
 Quick-and-dirty test with just two resistors and direct wiring. Image will be inverted (negative), but confirms that the signal path and frequency are compatible before committing to a PCB design.
+
+---
+
+### EGA mode (SW8 = ON) — preserves full EGA capability
+
+### [Option D: EGA Mode Adapter](docs/option-d-ega-mode.md)
+
+Keep the PC1640 in EGA mode for full 64-color palette capability. This option has two tiers:
+
+**D1: 200-line programs (most DOS games)** — Same adapter as Option A, plus 3 Schottky diodes (or 74HC32 OR gate) to derive the Intensity signal from EGA's three secondary color lines. Works at 15.7 kHz. Cost: ~16–22€.
+
+**D2: 350-line programs (Windows, productivity software)** — PC-MM cannot physically display 21.85 kHz. Requires an external scan rate converter:
+- Budget: MCE2VGA + GBS-Control chain (~50–90€)
+- Quality: OSSC Pro (~350€)
+
+| | D1 (200-line) | D2 (350-line) |
+|---|---|---|
+| **Additional HW** | 3 diodes or 1 IC | Scan converter |
+| **Programs** | Most DOS games | Windows, SimCity, Flight Sim |
+| **H-frequency** | 15.7 kHz (native) | 21.85 kHz → 15.7 kHz (converted) |
+| **Cost** | ~16–22€ | ~50–350€ + adapter |
+| **Complexity** | Low | High |
 
 ## Project Status
 
