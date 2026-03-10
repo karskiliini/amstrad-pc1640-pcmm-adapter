@@ -86,7 +86,14 @@ def make_pad(num, pad_type, shape, rel_x, rel_y, w, h, drill, net_id, net_name, 
 \t\t)"""
 
 
-def make_footprint(fp_lib, ref, value, x, y, rot, pads_str):
+def make_footprint(fp_lib, ref, value, x, y, rot, pads_str, model_path=None):
+    model_str = ""
+    if model_path:
+        model_str = f"""\t\t(model "${{KICAD9_3DMODEL_DIR}}/{model_path}"
+\t\t\t(offset (xyz 0 0 0))
+\t\t\t(scale (xyz 1 1 1))
+\t\t\t(rotate (xyz 0 0 0))
+\t\t)"""
     return f"""\t(footprint "{fp_lib}"
 \t\t(layer "F.Cu")
 \t\t(uuid "{uid()}")
@@ -114,6 +121,7 @@ def make_footprint(fp_lib, ref, value, x, y, rot, pads_str):
 \t\t\t(effects (font (size 1.27 1.27) (thickness 0.15)))
 \t\t)
 {pads_str}
+{model_str}
 \t\t(embedded_fonts no)
 \t)"""
 
@@ -229,7 +237,8 @@ def generate():
         14: (2, "+5V"),
     }
     u1 = make_footprint("Package_DIP:DIP-14_W7.62mm", "U1", "74HC04",
-                        U1_X, U1_Y, 0, dip14_pads(u1_nets))
+                        U1_X, U1_Y, 0, dip14_pads(u1_nets),
+                        "Package_DIP.3dshapes/DIP-14_W7.62mm.step")
 
     # --- U2: 74HC86 ---
     # Pin mapping: 1=HSYNC, 2=VSYNC, 3=CSYNC, 4-6=GND(unused),
@@ -243,7 +252,8 @@ def generate():
         14: (2, "+5V"),
     }
     u2 = make_footprint("Package_DIP:DIP-14_W7.62mm", "U2", "74HC86",
-                        U2_X, U2_Y, 0, dip14_pads(u2_nets))
+                        U2_X, U2_Y, 0, dip14_pads(u2_nets),
+                        "Package_DIP.3dshapes/DIP-14_W7.62mm.step")
 
     # --- J1: DE-9 Male ---
     # Pin mapping: 1=GND, 2=nc, 3=RED, 4=GREEN, 5=BLUE,
@@ -254,7 +264,8 @@ def generate():
         7: (0, ""), 8: (11, "HSYNC"), 9: (12, "VSYNC"),
     }
     j1 = make_footprint("Connector_Dsub:DSUB-9_Male_Horizontal_P2.77x2.84mm",
-                        "J1", "DB9_Male", J1_X, J1_Y, 0, db9_male_pads(j1_nets))
+                        "J1", "DB9_Male", J1_X, J1_Y, 0, db9_male_pads(j1_nets),
+                        "Connector_Dsub.3dshapes/DSUB-9_Pins_Horizontal_P2.77x2.84mm_EdgePinOffset9.40mm.step")
 
     # --- J2: DIN-8 Female ---
     # Pin mapping: 1=CSYNC_INV, 2=INTENSITY_INV, 3=GND, 4=BLACK,
@@ -265,29 +276,34 @@ def generate():
         5: (6, "GREEN_INV"), 6: (8, "BLUE_INV"),
         7: (1, "GND"), 8: (4, "RED_INV"),
     }
+    # DIN-8: no standard KiCad 3D model, skip
     j2 = make_footprint("amstrad-adapter:DIN-8_Video", "J2", "DIN-8",
                         J2_X, J2_Y, 0, din8_pads(j2_nets))
 
     # --- C1: 100nF near U1 ---
     c1 = make_footprint("Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm",
                         "C1", "100nF", C1_X, C1_Y, 0,
-                        cap_pads((2, "+5V"), (1, "GND")))
+                        cap_pads((2, "+5V"), (1, "GND")),
+                        "Capacitor_THT.3dshapes/C_Disc_D5.0mm_W2.5mm_P2.50mm.step")
 
     # --- C2: 100nF near U2 ---
     c2 = make_footprint("Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm",
                         "C2", "100nF", C2_X, C2_Y, 0,
-                        cap_pads((2, "+5V"), (1, "GND")))
+                        cap_pads((2, "+5V"), (1, "GND")),
+                        "Capacitor_THT.3dshapes/C_Disc_D5.0mm_W2.5mm_P2.50mm.step")
 
     # --- R1: 10kΩ pull-up for BLACK ---
     r1 = make_footprint(
         "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal",
         "R1", "10k", R1_X, R1_Y, 0,
-        resistor_pads((2, "+5V"), (15, "BLACK")))
+        resistor_pads((2, "+5V"), (15, "BLACK")),
+        "Resistor_THT.3dshapes/R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal.step")
 
     # --- J3: 2-pin power header ---
     j3 = make_footprint("Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
                         "J3", "+5V/GND", J3_X, J3_Y, 0,
-                        header2_pads((2, "+5V"), (1, "GND")))
+                        header2_pads((2, "+5V"), (1, "GND")),
+                        "Connector_PinHeader_2.54mm.3dshapes/PinHeader_1x02_P2.54mm_Vertical.step")
 
     # --- Board outline ---
     bx1, by1 = BOARD_X, BOARD_Y
