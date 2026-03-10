@@ -92,8 +92,8 @@ def make_footprint(fp_lib, ref, value, x, y, rot, pads_str):
 \t\t(uuid "{uid()}")
 \t\t(at {x} {y}{f' {rot}' if rot else ''})
 \t\t(property "Reference" "{ref}"
-\t\t\t(at 0 -2 0)
-\t\t\t(layer "F.SilkS")
+\t\t\t(at 0 3 0)
+\t\t\t(layer "F.Fab")
 \t\t\t(uuid "{uid()}")
 \t\t\t(effects (font (size 1 1) (thickness 0.15)))
 \t\t)
@@ -303,7 +303,7 @@ def generate():
 
     # --- Board label ---
     label = f"""\t(gr_text "PC1640→PC-MM Adapter v1.0"
-\t\t(at {BOARD_X + BOARD_W/2} {BOARD_Y + 3} 0)
+\t\t(at {BOARD_X + BOARD_W/2} {BOARD_Y + BOARD_H - 3} 0)
 \t\t(layer "F.SilkS")
 \t\t(uuid "{uid()}")
 \t\t(effects (font (size 1.2 1.2) (thickness 0.15))
