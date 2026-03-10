@@ -21,10 +21,10 @@
       )
     )
     (boundary
-      (path pcb 0  180000 -125000  100000 -125000  100000 -80000  180000 -80000
-            180000 -125000)
+      (path pcb 0  180000 -112000  100000 -112000  100000 -80000  180000 -80000
+            180000 -112000)
     )
-    (plane GND (polygon B.Cu 0  100000 -80000  180000 -80000  180000 -125000  100000 -125000
+    (plane GND (polygon B.Cu 0  100000 -80000  180000 -80000  180000 -112000  100000 -112000
             100000 -80000))
     (via "Via[0-1]_600:300_um")
     (rule
@@ -46,13 +46,13 @@
       (place C2 146000.000000 -82000.000000 front 0.000000 (PN 100nF))
     )
     (component Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal
-      (place R1 157000.000000 -112000.000000 front 0.000000 (PN 10k))
+      (place R1 150000.000000 -108000.000000 front 0.000000 (PN 10k))
     )
     (component "amstrad-adapter:DIN-8_Video"
       (place J2 170000.000000 -100000.000000 front 0.000000 (PN "DIN-8"))
     )
     (component Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical
-      (place J3 140000.000000 -121000.000000 front 0.000000 (PN +5V/GND))
+      (place J3 140000.000000 -108000.000000 front 0.000000 (PN +5V/GND))
     )
   )
   (library

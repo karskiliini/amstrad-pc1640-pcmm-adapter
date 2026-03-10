@@ -11,7 +11,7 @@ Komponentit:
   J2: DIN-8 Female (through-hole, custom footprint)
   J3: 2-pin header (power input)
 
-Levy: 80 x 45 mm, 2-layer
+Levy: 80 x 32 mm, 2-layer
 """
 import uuid
 
@@ -19,7 +19,7 @@ import uuid
 BOARD_X = 100.0
 BOARD_Y = 80.0
 BOARD_W = 80.0
-BOARD_H = 45.0
+BOARD_H = 32.0
 
 # --- Nets ---
 NETS = [
@@ -43,7 +43,7 @@ NETS = [
 
 # --- Component positions (absolute) ---
 # Layout: J1(DE-9) left → U1,U2 side-by-side center → J2(DIN-8) right
-# Board: 80 x 45 mm at (100,80)-(180,125)
+# Board: 80 x 32 mm at (100,80)-(180,112)
 
 # J1: DE-9 at left edge
 J1_X, J1_Y = 108.0, 100.0
@@ -60,14 +60,14 @@ C1_X, C1_Y = 133.0, 82.0
 # C2: above U2 (decoupling)
 C2_X, C2_Y = 146.0, 82.0
 
-# R1: lower right area, near J2
-R1_X, R1_Y = 157.0, 112.0
+# R1: below U2, between ICs and J2
+R1_X, R1_Y = 150.0, 108.0
 
 # J2: DIN-8 at right edge
 J2_X, J2_Y = 170.0, 100.0
 
-# J3: power header at bottom center
-J3_X, J3_Y = 140.0, 121.0
+# J3: power header below ICs, center
+J3_X, J3_Y = 140.0, 108.0
 
 
 def uid():
