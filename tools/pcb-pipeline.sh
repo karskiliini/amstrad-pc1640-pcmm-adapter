@@ -53,11 +53,11 @@ ok "Validointi OK"
 
 # --- 2. Export DSN ---
 info "Exportoidaan DSN..."
-$KICAD_PYTHON -c "
-import pcbnew
-board = pcbnew.LoadBoard('$PCB')
-pcbnew.ExportSpecctraDSN(board, '$DSN')
-" 2>/dev/null
+"$KICAD_PYTHON" -c "
+import pcbnew, sys
+board = pcbnew.LoadBoard(sys.argv[1])
+pcbnew.ExportSpecctraDSN(board, sys.argv[2])
+" "$PCB" "$DSN" 2>/dev/null
 [ -f "$DSN" ] || fail "DSN export epäonnistui"
 ok "DSN: $DSN"
 
@@ -81,15 +81,15 @@ if [ -f "$FREEROUTING" ]; then
 
     # --- 4. Import SES + 5. Fill zones ---
     info "Importoidaan reitit ja täytetään zonet..."
-    $KICAD_PYTHON -c "
-import pcbnew
-board = pcbnew.LoadBoard('$PCB')
-pcbnew.ImportSpecctraSES(board, '$SES')
+    "$KICAD_PYTHON" -c "
+import pcbnew, sys
+board = pcbnew.LoadBoard(sys.argv[1])
+pcbnew.ImportSpecctraSES(board, sys.argv[2])
 filler = pcbnew.ZONE_FILLER(board)
 filler.Fill(board.Zones())
-board.Save('$PCB')
+board.Save(sys.argv[1])
 print('OK: routes imported, zones filled')
-" 2>/dev/null
+" "$PCB" "$SES" 2>/dev/null
     ok "Reitit ja zonet OK"
 else
     warn "Freerouting.jar puuttuu — ohitetaan automaattireititys"
